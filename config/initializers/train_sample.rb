@@ -14,4 +14,3 @@ irrelevant.each do |tweet|
   CLASSIFIER.train(:discard, tweet)
 end
 
-# CORPSE.cleanup

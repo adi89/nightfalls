@@ -10,24 +10,24 @@
 #  updated_at :datetime
 #
 class Tweet < ActiveRecord::Base
+  include TwitterClient
   validates_uniqueness_of :tweet_code, unless: Proc.new{|c| c.tweet_code.blank?}
 
   state_machine :state, initial: :irrelevant do
-    event :nightlife do
+    event :night do
       transition all => :nightlife
     end
-    event :irrelevant do
+    event :discard do
       transition all => :irrelevant
     end
   end
 
-  def self.client
-    Twitter::REST::Client.new do |config|
-      config.consumer_key        = ENV['TWITTER_CONSUMER_KEY']
-      config.consumer_secret     = ENV['TWITTER_CONSUMER_SECRET']
-      config.access_token        = ENV['TWITTER_ACCESS_TOKEN']
-      config.access_token_secret = ENV['TWITTER_ACCESS_TOKEN_SECRET']
-    end
+  def self.nightlife
+    Tweet.where(state: 'nightlife')
+  end
+
+  def self.irrelevant
+    Tweet.where(state: 'irrelevant')
   end
 
   def self.collect_strings(collection)
@@ -42,32 +42,10 @@ class Tweet < ActiveRecord::Base
     hashify(tweet)[attribute]
   end
 
-  def self.remove_keys(hash)
-    hash.delete('username')
-    hash.delete('state')
-    hash
-  end
-
   def self.corpse_string(tweet, attribute)
     hash = Hash.new
     hash[attribute] = parse_hash(tweet, attribute)
     hash[attribute]
-  end
-
-  def self.nightlife
-    Tweet.where(state: 'nightlife')
-  end
-
-  def self.irrelevant
-    Tweet.where(state: 'irrelevant')
-  end
-
-  def self.home_timeline_data
-    client.home_timeline(:count => 200)
-  end
-
-  def self.user_timeline_data
-    client.user_timeline('NYNightlife', count: 200)
   end
 
   def self.set_tweet_timeline
@@ -88,20 +66,6 @@ class Tweet < ActiveRecord::Base
 
   def self.username(tweet)
     tweet.user.screen_name
-  end
-
-  def self.collect_with_max_id(collection=[], max_id=nil, &block)
-    response = yield max_id
-    collection += response
-    response.empty? ? collection.flatten : collect_with_max_id(collection, response.last.id - 1, &block)
-  end
-
-  def self.fetch_all_tweets
-    collect_with_max_id do |max_id|
-      options = {:count => 200, :include_rts => true}
-      options[:max_id] = max_id unless max_id.nil?
-      client.user_timelime('NYNightlife', options)
-    end
   end
 
 end
