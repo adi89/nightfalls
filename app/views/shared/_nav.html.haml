@@ -1,0 +1,10 @@
+%nav.navbar.navbar-inverse{role: 'navigation'}
+  .navbar-header
+    %button.navbar-toggle{"data-target" => ".navbar-ex1-collapse", "data-toggle" => "collapse", type: "button"}
+      %span.sr-only Toggle navigation
+      %span.icon-bar
+      %span.icon-ba
+      %span.icon-bar
+    = link_to('NiteFalls', root_path, html_options = {:class => 'nitefalls-brand'})
+  .collapse.navbar-collapse.navbar-ex1-collapse
+    %ul.nav.navbar-nav.navbar-right

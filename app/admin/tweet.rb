@@ -18,9 +18,9 @@ ActiveAdmin.register Tweet do
     tweet = Tweet.find(params['id'])
     case params['state']
     when 'irrelevant'
-      tweet.nightlife
+      tweet.night
     when 'nightlife'
-      tweet.irrelevant
+      tweet.discard
     end
     render :json => {:state => "#{tweet.state}"}, :status => :ok
   end

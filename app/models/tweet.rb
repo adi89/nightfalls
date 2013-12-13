@@ -11,6 +11,7 @@
 #
 class Tweet < ActiveRecord::Base
   include TwitterClient
+  include TwitterStream
   validates_uniqueness_of :tweet_code, unless: Proc.new{|c| c.tweet_code.blank?}
 
   state_machine :state, initial: :irrelevant do
@@ -49,11 +50,16 @@ class Tweet < ActiveRecord::Base
   end
 
   def self.set_tweet_timeline
-    fetch_all_tweets.collect{|tweet_data| self.save_tweets(tweet_data)}
+    fetch_all_tweets.collect{|tweet_data| self.save_tweets(tweet_data, {})}
   end
 
-  def self.save_tweets(tweet)
-    Tweet.create(username: username(tweet), text: full_text(tweet), tweet_code: tweet_code(tweet))
+  def self.save_tweets(tweet, options = {})
+    if options[:state]
+      Tweet.create(username: username(tweet), text: full_text(tweet), tweet_code: tweet_code(tweet), state: 'nightlife')
+       puts 'tweet saved'
+    else
+      Tweet.create(username: username(tweet), text: full_text(tweet), tweet_code: tweet_code(tweet))
+    end
   end
 
   def self.full_text(tweet)
@@ -64,8 +70,29 @@ class Tweet < ActiveRecord::Base
     "#{i.id}"
   end
 
-  def self.username(tweet)
-    tweet.user.screen_name
+  def self.tweet_scan(minutes)
+    where("created_at > '#{Time.at(minutes_calculation(minutes))}'")
   end
+
+  def self.minutes_calculation(minutes)
+    Time.now.to_i + created_at_offset_factor - (60 * minutes) #5 hour offset
+  end
+
+  def self.created_at_offset_factor
+    3600 * 5 #5 hour pg offset's created
+  end
+
+  def self.recent_tweets(days)
+    where("created_at > '#{days_ago(days)}'")
+  end
+
+  def self.days_ago(days)
+    Time.at(days_calculation(days))
+  end
+
+  def self.days_calculation(days)
+    Time.now.to_i - (days * 3600 * 24)
+  end
+#ajax request, save to database, and do an every 5 minute thing for an update. first see if it's relevant. to nightlife, and see the avg rate to get that.
 
 end
