@@ -50,9 +50,6 @@ describe Tweet do
     end
   end
   describe 'TwitterClient' do
-    it 'client' do
-      expect(Tweet.client.present?).to eq true
-    end
     it 'user_timeline_data gives back tweets from a user' do
       expect(@user_timeline_data.present?).to eq true
     end
@@ -60,6 +57,7 @@ describe Tweet do
       expect(@all_tweet_data.count).should be > @tweet_data.count
     end
   end
+
   describe 'Tweet class methods' do
     it 'sets saves tweet records' do
       Tweet.set_tweet_timeline
@@ -76,6 +74,19 @@ describe Tweet do
     it 'collects string from active record collection' do
       nightlife = Tweet.irrelevant
       expect(Tweet.collect_strings(nightlife).first.class).to eq String
+    end
+  end
+  describe 'recent tweets' do
+    before(:each) do
+      @tweet_old = Fabricate(:tweet, tweet_code: "3432reskrdsj")
+      @tweet_old.created_at -= (24*3600 * 2)
+      @tweet_old.save
+    end
+    it 'will only return back tweets in the last x (in our case 2) minutes' do
+      expect(Tweet.tweet_scan(2).count).to eq 1
+    end
+    it 'will return back all objects in the last x (in our case 3) days' do
+      expect(Tweet.recent_tweets(3).count).to eq 2
     end
   end
 end
