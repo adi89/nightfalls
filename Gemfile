@@ -13,10 +13,12 @@ gem 'font-awesome-rails'
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim'
+gem 'kaminari'
 gem 'twitter'
 gem 'state_machine'
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'stuff-classifier'
+gem 'rinku'
 
 group :assets do
   gem 'sass-rails', '~> 4.0.0'

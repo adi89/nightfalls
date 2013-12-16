@@ -1,11 +1,5 @@
 .row
   #tweets{data: {url: root_path}}
-    -@tweets.each do |tweet|
-      .tweet
-        .row
-          .col-lg-2
-            = twitter_user_link(tweet.username)
-          .col-lg-8
-            = tweet.text.html_safe
-          .col-lg-2
-            = tweet.created_at
+    = render @tweets
+
+= paginate @tweets

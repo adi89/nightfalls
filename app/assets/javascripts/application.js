@@ -4,4 +4,5 @@
 //= require bootstrap.min
 //= require turbolinks
 //= require jquery.ui.all
+//= require jquery.infinitescroll
 //= require nightfalls

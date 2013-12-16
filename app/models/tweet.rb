@@ -55,7 +55,7 @@ class Tweet < ActiveRecord::Base
 
   def self.save_tweets(tweet, options = {})
     if options[:state]
-      Tweet.create(username: username(tweet), text: full_text(tweet), tweet_code: tweet_code(tweet), state: 'nightlife')
+      Tweet.create(username: username(tweet), text: full_text(tweet), tweet_code: tweet_code(tweet), state: options[:state])
        puts 'tweet saved'
     else
       Tweet.create(username: username(tweet), text: full_text(tweet), tweet_code: tweet_code(tweet))

@@ -222,6 +222,7 @@ GEM
       redis (~> 3.0.0)
     responders (1.0.0)
       railties (>= 3.2, < 5)
+    rinku (1.7.3)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
@@ -333,6 +334,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-turbolinks
   jquery-ui-rails
+  kaminari
   pg
   pry
   pry-debugger
@@ -340,6 +342,7 @@ DEPENDENCIES
   pry-stack_explorer
   quiet_assets
   rails (= 4.0.2)
+  rinku
   rspec-rails (~> 2.0)
   sass-rails (~> 4.0.0)
   sdoc

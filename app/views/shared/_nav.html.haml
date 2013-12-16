@@ -1,10 +1,27 @@
-%nav.navbar.navbar-inverse{role: 'navigation'}
+%nav.navbar.navbar-inverse#nitefalls-nav{role: "navigation"}
+  / Brand and toggle get grouped for better mobile display
   .navbar-header
-    %button.navbar-toggle{"data-target" => ".navbar-ex1-collapse", "data-toggle" => "collapse", type: "button"}
+    %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", type: "button"}
       %span.sr-only Toggle navigation
       %span.icon-bar
-      %span.icon-ba
       %span.icon-bar
-    = link_to('NiteFalls', root_path, html_options = {:class => 'nitefalls-brand'})
-  .collapse.navbar-collapse.navbar-ex1-collapse
+      %span.icon-bar
+    = link_to "NiteFalls", root_path, class: "navbar-brand", id: 'nitefalls-nav-link'
+  / Collect the nav links, forms, and other content for toggling
+  #bs-example-navbar-collapse-1.collapse.navbar-collapse
     %ul.nav.navbar-nav.navbar-right
+      %li.dropdown
+        %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
+          Dropdown
+          %b.caret
+        %ul.dropdown-menu
+          %li
+            %a{href: "#"} Action
+          %li
+            %a{href: "#"} Another action
+          %li
+            %a{href: "#"} Something else here
+          %li.divider
+          %li
+            %a{href: "#"} Separated link
+  / /.navbar-collapse

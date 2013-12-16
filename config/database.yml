@@ -2,7 +2,7 @@ development:
   adapter: postgresql
   encoding: unicode
   database: nightfalls_development
-  pool: 5
+  pool: 2
   host: localhost
   username:  AdiSingh
   password:
@@ -11,7 +11,7 @@ test:
   adapter: postgresql
   encoding: unicode
   database: nightfalls_test
-  pool: 5
+  pool: 2
   host: localhost
   username:  AdiSingh
   password:
@@ -20,7 +20,7 @@ production:
   adapter: postgresql
   encoding: unicode
   database: nightfalls_production
-  pool: 5
+  pool: 2
   host: localhost
   username:  AdiSingh
   password:

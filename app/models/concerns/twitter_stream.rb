@@ -17,31 +17,31 @@ module TwitterStream
       end
     end
 
+    def is_a_tweet?(object)
+      object.is_a?(Twitter::Tweet) && object.full_text.is_a?(String)
+    end
+
     def tweet_response(object)
-      if object.is_a?(Twitter::Tweet)
+      if is_a_tweet?(object)
         puts object.text
         classify_tweet(object)
       else
-        false
+        puts 'not a tweet'
       end
     end
 
     def classify_tweet(object)
-      if CLASSIFIER.classify(object.full_text) == :night
+      if nightlife?(object)
+        puts 'nightlife'
         save_tweets(object, {state: 'nightlife'})
       else
-        false
+        puts 'irrelevant'
+        save_tweets(object, {state: 'irrelevant'})
       end
     end
 
     def nightlife?(object)
-      classify_tweet(object)
-    end
-
-    def parse_stream(object)
-      if nightlife?(object)
-        print_tweet(object)
-      end
+      CLASSIFIER.classify(object.full_text) == :night
     end
 
     def username(tweet)
