@@ -8,6 +8,19 @@
 #  tweet_code :string(255)
 #  created_at :datetime
 #  updated_at :datetime
+#  state      :string(255)
+#
+
+# == Schema Information
+#
+# Table name: tweets
+#
+#  id         :integer          not null, primary key
+#  username   :string(255)
+#  text       :string(255)
+#  tweet_code :string(255)
+#  created_at :datetime
+#  updated_at :datetime
 #
 class Tweet < ActiveRecord::Base
   include TwitterClient

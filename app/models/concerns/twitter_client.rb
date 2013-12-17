@@ -43,10 +43,6 @@ module TwitterClient
       puts "#{username(tweet)} #{full_text(tweet)}"
     end
 
-    def self.is_a_tweet?(object)
-      object.is_a?(Twitter::Tweet) && object.full_text.is_a?(String)
-    end
-
     def client
       Twitter::REST::Client.new do |config|
         config.consumer_key        = ENV['TWITTER_CONSUMER_KEY']

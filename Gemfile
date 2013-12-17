@@ -18,7 +18,10 @@ gem 'twitter'
 gem 'state_machine'
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'stuff-classifier'
-gem 'rinku'
+# gem 'rinku'
+gem 'twitter-text'
+gem 'devise'
+gem 'omniauth-twitter'
 
 group :assets do
   gem 'sass-rails', '~> 4.0.0'

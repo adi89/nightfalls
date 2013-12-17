@@ -32,6 +32,10 @@ module TwitterStream
       CLASSIFIER.classify(tweet_data.full_text) == :night
     end
 
+    def is_a_tweet?(object)
+      object.is_a?(Twitter::Tweet) && object.full_text.is_a?(String)
+    end
+
     def tweet_response(object)
       if is_a_tweet?(object)
         puts object.text

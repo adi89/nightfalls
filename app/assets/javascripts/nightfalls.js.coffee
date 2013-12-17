@@ -6,7 +6,8 @@
     path = $('#tweets').data('url')
     $.get "#{path}?type=stream", (data) ->
       console.log(data)
-      $('#tweets').prepend(data).hide().fadeIn('slow')
+      $('#tweets').prepend(data)
+      $(data).hide().fadeIn('slow')
       Tweets.incoming()
 infiniteScroll = (navSelector, itemSelector) ->
   $(navSelector).infinitescroll
@@ -15,7 +16,5 @@ infiniteScroll = (navSelector, itemSelector) ->
     itemSelector: "#{navSelector} #{itemSelector}" # selector for all items you'll retrieve
 $ ->
   infiniteScroll('#tweets', '.tweet-container')
-
   if $('#tweets').length > 0
     Tweets.incoming()
-

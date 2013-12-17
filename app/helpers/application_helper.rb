@@ -9,6 +9,6 @@ module ApplicationHelper
   end
 
   def twitter_message_w_links(text)
-    Rinku.auto_link(text).html_safe
+    Twitter::Autolink.auto_link(text).html_safe
   end
 end
