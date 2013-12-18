@@ -1,5 +1,13 @@
 class ApplicationController < ActionController::Base
+  # require 'sidekiq/testing
+  require 'sidekiq'
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+
+
+  def clear_workers
+    binding.pry
+     Sidekiq::Queue.new.clear
+  end
 end

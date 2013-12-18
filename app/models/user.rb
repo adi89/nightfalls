@@ -50,6 +50,7 @@ class User < ActiveRecord::Base
   end
 
   def update_with_password(params, *options)
+    binding.pry
     if encrypted_password.blank?
       update_attributes(params, *options)
     else

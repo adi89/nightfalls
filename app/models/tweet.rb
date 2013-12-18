@@ -8,24 +8,12 @@
 #  tweet_code :string(255)
 #  created_at :datetime
 #  updated_at :datetime
-#  state      :string(255)
-#
-
-# == Schema Information
-#
-# Table name: tweets
-#
-#  id         :integer          not null, primary key
-#  username   :string(255)
-#  text       :string(255)
-#  tweet_code :string(255)
-#  created_at :datetime
-#  updated_at :datetime
 #
 class Tweet < ActiveRecord::Base
   include TwitterClient
   include TwitterStream
   validates_uniqueness_of :tweet_code, unless: Proc.new{|c| c.tweet_code.blank?}
+  belongs_to :category
 
   state_machine :state, initial: :irrelevant do
     event :night do
