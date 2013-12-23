@@ -9,11 +9,7 @@
 #  list       :string(255)
 #
 
-class Category < ActiveRecord::Base
-  has_many :tweets
-  accepts_nested_attributes_for :tweets
-
-  def self.list(list)
-    find_by_name(list)
-  end
+Fabricator(:category) do
+  name 'high end djs'
+  list 'high-end-djs'
 end

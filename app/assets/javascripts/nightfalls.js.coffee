@@ -1,10 +1,11 @@
 @Tweets =
   incoming: ->
-    setTimeout @request, 60000
+    setTimeout @request, 300000
   request: ->
     console.log('fire!')
     path = $('#tweets').data('url')
-    $.get "#{path}?type=stream", (data) ->
+    categoryId = $('#tweets').data('category-id')
+    $.get "#{path}?type=stream&category_id=#{categoryId}", (data) ->
       console.log(data)
       $('#tweets').prepend(data)
       $(data).hide().fadeIn('slow')

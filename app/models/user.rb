@@ -17,6 +17,7 @@
 #  updated_at             :datetime
 #  provider               :string(255)
 #  uid                    :string(255)
+#  username               :string(255)
 #
 
 class User < ActiveRecord::Base

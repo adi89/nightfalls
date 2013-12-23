@@ -4,6 +4,7 @@ WhentheNitefalls::Application.routes.draw do
 mount Sidekiq::Web, at: "/sidekiq"
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+  get 'tweets/categories' => 'tweets#categories'
   resources :tweets
   resources :categories
   root to: 'tweets#index'

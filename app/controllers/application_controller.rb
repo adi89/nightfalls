@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
 
 
   def clear_workers
-    binding.pry
      Sidekiq::Queue.new.clear
   end
 end

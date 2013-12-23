@@ -11,14 +11,18 @@
   #bs-example-navbar-collapse-1.collapse.navbar-collapse
     %ul.nav.navbar-nav.navbar-right
       -if user_signed_in?
-        %li= link_to "Categories", categories_path
         %li.dropdown
           %a.dropdown-toggle.logged-in-as{"data-toggle" => "dropdown", href: "#"}
-            = "Logged in as #{current_user.email}"
+            = "Categories"
             %b.caret
           %ul.dropdown-menu
-            %li= link_to 'Edit profile', edit_user_registration_path
-            %li= link_to "Logout", destroy_user_session_path, method: :delete
+            %li= link_to 'Information', tweets_categories_path(:type => 'information')
+            %li= link_to 'High End DJs', tweets_categories_path(:type => 'high-end-djs')
+            %li= link_to 'Scenesters', tweets_categories_path(:type => 'nyc-scenesters')
+            %li= link_to 'Promoters', tweets_categories_path(:type => 'nyc-promoters')
+            %li= link_to 'Power Players', tweets_categories_path(:type => 'nyc-power-players')
+        %li= link_to 'Edit profile', edit_user_registration_path
+        %li= link_to "Logout", destroy_user_session_path, method: :delete
       -else
         %li= link_to "Sign up", new_user_registration_path
         %li= link_to "Sign in", new_user_session_path

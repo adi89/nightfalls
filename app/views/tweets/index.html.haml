@@ -1,5 +1,9 @@
 .row
-  #tweets{data: {url: root_path}}
+  -if @category
+    %h2= @category.name.titleize
+  -else
+    %h2 The NiteFeed
+  #tweets{data: {url: request.path, category_id: @category.try(:id)}}
     = render @tweets
 
 = paginate @tweets

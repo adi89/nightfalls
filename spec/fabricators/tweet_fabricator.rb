@@ -2,13 +2,14 @@
 #
 # Table name: tweets
 #
-#  id         :integer          not null, primary key
-#  username   :string(255)
-#  text       :string(255)
-#  tweet_code :string(255)
-#  created_at :datetime
-#  updated_at :datetime
-#  state      :string(255)
+#  id          :integer          not null, primary key
+#  username    :string(255)
+#  text        :string(255)
+#  tweet_code  :string(255)
+#  created_at  :datetime
+#  updated_at  :datetime
+#  state       :string(255)
+#  category_id :integer
 #
 
 Fabricator(:tweet) do

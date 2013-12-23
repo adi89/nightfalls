@@ -2,17 +2,19 @@
 #
 # Table name: tweets
 #
-#  id         :integer          not null, primary key
-#  username   :string(255)
-#  text       :string(255)
-#  tweet_code :string(255)
-#  created_at :datetime
-#  updated_at :datetime
+#  id          :integer          not null, primary key
+#  username    :string(255)
+#  text        :string(255)
+#  tweet_code  :string(255)
+#  created_at  :datetime
+#  updated_at  :datetime
+#  state       :string(255)
+#  category_id :integer
 #
 class Tweet < ActiveRecord::Base
   include TwitterClient
-  include TwitterStream
   validates_uniqueness_of :tweet_code, unless: Proc.new{|c| c.tweet_code.blank?}
+  validates_uniqueness_of :text
   belongs_to :category
 
   state_machine :state, initial: :irrelevant do
@@ -32,14 +34,29 @@ class Tweet < ActiveRecord::Base
     Tweet.where(state: 'irrelevant')
   end
 
+  def self.category_sort(id)
+    Tweet.where(category_id: "#{id}")
+  end
+
   def self.set_tweet_timeline
     fetch_all_tweets.collect{|tweet_data| self.save_tweets(tweet_data, {})}
   end
 
   def self.save_tweets(tweet, options = {})
     if options[:state]
-      Tweet.create(username: username(tweet), text: full_text(tweet), tweet_code: tweet_code(tweet), state: options[:state])
-      puts 'tweet saved'
+      t = Tweet.find_or_initialize_by(tweet_code: tweet_code(tweet))
+      if t.new_record?
+        t.text = full_text(tweet)
+        t.username = username(tweet)
+        t.state = options[:state]
+        t.save
+        puts "tweet saved"
+      end
+        category = Category.find(options[:category_id])
+        unless category.tweets.include? t
+          category.tweets << t
+          puts "Tweet put in #{category.name}"
+        end
     else
       Tweet.create(username: username(tweet), text: full_text(tweet), tweet_code: tweet_code(tweet))
     end

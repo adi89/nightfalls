@@ -22,6 +22,8 @@ gem 'stuff-classifier'
 gem 'twitter-text'
 gem 'devise'
 gem 'omniauth-twitter'
+gem 'clockwork'
+gem 'foreman'
 
 group :assets do
   gem 'sass-rails', '~> 4.0.0'
