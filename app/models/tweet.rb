@@ -11,10 +11,24 @@
 #  state       :string(255)
 #  category_id :integer
 #
+
+# == Schema Information
+#
+# Table name: tweets
+#
+#  id          :integer          not null, primary key
+#  username    :string(255)
+#  text        :string(255)
+#  tweet_code  :string(255)
+#  created_at  :datetime
+#  updated_at  :datetime
+#  state       :string(255)
+#  category_id :integer
+#
 class Tweet < ActiveRecord::Base
   include TwitterClient
-  validates_uniqueness_of :tweet_code, unless: Proc.new{|c| c.tweet_code.blank?}
-  validates_uniqueness_of :text
+  validates :tweet_code, uniqueness: true, unless: Proc.new{|c| c.tweet_code.blank?}
+  validates :text, uniqueness: true
   belongs_to :category
 
   state_machine :state, initial: :irrelevant do
@@ -38,28 +52,27 @@ class Tweet < ActiveRecord::Base
     Tweet.where(category_id: "#{id}")
   end
 
-  def self.set_tweet_timeline
-    fetch_all_tweets.collect{|tweet_data| self.save_tweets(tweet_data, {})}
-  end
-
   def self.save_tweets(tweet, options = {})
-    if options[:state]
+    # dedupe
+    state = options[:state] || 'irrelevant'
+    if options[:category_id]
       t = Tweet.find_or_initialize_by(tweet_code: tweet_code(tweet))
       if t.new_record?
         t.text = full_text(tweet)
         t.username = username(tweet)
-        t.state = options[:state]
+        t.state = state
         t.save
         puts "tweet saved"
       end
-        category = Category.find(options[:category_id])
-        unless category.tweets.include? t
-          category.tweets << t
-          puts "Tweet put in #{category.name}"
-        end
+      category = Category.find(options[:category_id])
+      unless category.tweets.include? t
+        category.tweets << t
+        puts "Tweet put in #{category.name}"
+      end
     else
-      Tweet.create(username: username(tweet), text: full_text(tweet), tweet_code: tweet_code(tweet))
+      t = Tweet.create(username: username(tweet), text: full_text(tweet), tweet_code: tweet_code(tweet), state: state)
     end
+    t
   end
 
   def self.tweet_scan(minutes)
@@ -71,6 +84,10 @@ class Tweet < ActiveRecord::Base
   end
 
   private
+  def self.set_tweet_timeline
+    fetch_all_tweets.collect{|tweet_data| self.save_tweets(tweet_data, {})}
+  end
+
   def self.days_ago(days)
     Time.at(days_calculation(days))
   end
@@ -104,6 +121,19 @@ class Tweet < ActiveRecord::Base
     hash[attribute] = parse_hash(tweet, attribute)
     hash[attribute]
   end
-  #ajax request, save to database, and do an every 5 minute thing for an update. first see if it's relevant. to nightlife, and see the avg rate to get that.
+
+
+  def self.dedupe
+    # find all models and group them on keys which should be common
+    grouped = all.group_by{|tweet| [tweet.tweet_code] }
+    grouped.values.each do |duplicates|
+      # the first one we want to keep right?
+      first_one = duplicates.shift # or pop for last one
+      # if there are any more left, they are duplicates
+      # so delete all of them
+      duplicates.each{|double| double.destroy} # duplicates can now be destroyed
+    end
+  end
 
 end
+#ajax request, save to database, and do an every 5 minute thing for an update. first see if it's relevant. to nightlife, and see the avg rate to get that.

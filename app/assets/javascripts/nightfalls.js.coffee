@@ -2,7 +2,6 @@
   incoming: ->
     setTimeout @request, 300000
   request: ->
-    console.log('fire!')
     path = $('#tweets').data('url')
     categoryId = $('#tweets').data('category-id')
     $.get "#{path}?type=stream&category_id=#{categoryId}", (data) ->
@@ -19,3 +18,15 @@ $ ->
   infiniteScroll('#tweets', '.tweet-container')
   if $('#tweets').length > 0
     Tweets.incoming()
+
+  $('body').on 'click', '.follow-nightlife', (e) ->
+    e.preventDefault()
+    link = $(this)
+    path = link.attr('href')
+    username = link.data('username')
+    $.get "#{path}?username=#{username}", (data) ->
+      link.text('following')
+      link.attr('disabled', 'disabled')
+#we have tokens from the user and we can pass it along or whatever, we can
+
+#make methods so that we get the list names and make list on another twitteraccount with the same names.

@@ -3,8 +3,17 @@
     .row
       .col-lg-2
         = twitter_user_link(tweet.username)
-      .col-lg-8
+      .col-lg-6
         .twitter-message
           = twitter_message_w_links(tweet.text)
+      .col-lg-2
+        -if @auth && @auth.following?(tweet.username)
+          %i following
+        -elsif @auth
+          .follow
+            %i
+              =link_to 'follow', follow_friend_path, class: 'follow-nightlife', data: {username: tweet.username}
+        -else
+
       .col-lg-2
         = proper_date(tweet.created_at)

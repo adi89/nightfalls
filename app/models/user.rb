@@ -18,6 +18,8 @@
 #  provider               :string(255)
 #  uid                    :string(255)
 #  username               :string(255)
+#  token                  :string(255)
+#  token_secret           :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -25,18 +27,36 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable, :omniauthable
+  attr_accessor :current_user
+  has_many :users_friends
+  has_many :friends, through: :users_friends
 
   def self.from_omniauth(auth)
+    binding.pry
     where(auth.slice(:provider, :uid)).first_or_create do |user|
       user.provider = auth.provider
       user.uid = auth.uid
+      user.token = auth.extra['access_token'].token
+      user.token_secret = auth.extra['access_token'].secret
       user.username = auth.info.nickname
+      rack_up_friends(user)
+    end
+  end
+
+  def following?(tweet_handle)
+    self.friends.where(username: tweet_handle).present?
+  end
+
+  def self.rack_up_friends(user)
+    binding.pry
+    if user.friends.empty?
+      user.friends << Friend.save_friends({token: user.token, token_secret: user.token_secret})
     end
   end
 
   def self.new_with_session(params, session)
     if session["devise.user_attributes"]
-      binding.pry
+      # binding.pry
       new(session["devise.user_attributes"], without_protection: true) do |user|
         user.attributes = params
         user.valid?
@@ -51,7 +71,6 @@ class User < ActiveRecord::Base
   end
 
   def update_with_password(params, *options)
-    binding.pry
     if encrypted_password.blank?
       update_attributes(params, *options)
     else

@@ -17,7 +17,7 @@ require 'spec_helper'
 describe Tweet do
   before(:each) do
     @tweet = Fabricate(:tweet)
-    @all_tweet_data = Tweet.fetch_all_tweets
+    @all_tweet_data = Tweet.fetch_all_tweets('mr_adisingh')
     @user_timeline_data = Tweet.user_timeline_data('mr_adisingh', {})
     Tweet.stub(:fetch_all_tweets).and_return @all_tweet_data
     @tweet_data = Tweet.user_timeline_data('mr_adisingh', {})
@@ -43,6 +43,28 @@ describe Tweet do
     it 'filters by irrelevant state' do
       expect(Tweet.irrelevant.present?).to eq true
     end
+    it 'sorts by categories' do
+      cat = Category.create(name: 'cat1')
+      expect(Tweet.category_sort(cat.id).present?).to eq false
+    end
+  end
+  describe 'save tweets' do
+    category = Category.create(name: 'ag1')
+    it 'saves tweets' do
+      tweet = @all_tweet_data.first
+      tweet = Tweet.save_tweets(tweet, category_id: category.id)
+      expect(tweet).should be_an_instance_of Tweet
+    end
+  end
+  describe 'time methods' do
+    it 'scans tweets by minutes' do
+      expect(Tweet.tweet_scan(35).first).to eq @tweet
+    end
+    it 'returns recent tweets (days)' do
+      time = Time.now - (60 * 60 * 26)
+      t = Fabricate(:tweet, created_at: time, text: 'time sensitive', tweet_code: '7691243')
+      expect(Tweet.recent_tweets(1).count).to eq 2
+    end
   end
   describe 'validations' do
     it 'must have a unique tweet code' do
@@ -57,11 +79,25 @@ describe Tweet do
     it 'fetches all tweets' do
       expect(@all_tweet_data.count).should be > @tweet_data.count
     end
+    it 'classifies tweets' do
+      tweet_data = @all_tweet_data.first
+      Tweet.classify_tweet(tweet_data)
+      expect(Tweet.last.text).to eq tweet_data.full_text
+    end
+    it ' list timeline' do
+      timeline = Tweet.list_timeline(list: 'information', count: 20)
+      expect(timeline.first).should be_an_instance_of Twitter::Tweet
+    end
+    it 'iterates through users and saves tweets' do
+      user = Fabricate(:user)
+      t =  Tweet.list_users_tweets(list: 'information', token: user.token, token: user.token_secret)
+      expect(t.first).should be_an_instance_of Twitter::Tweet
+    end
   end
 
   describe 'Tweet class methods' do
     it 'sets saves tweet records' do
-      Tweet.set_tweet_timeline
+      t = Tweet.set_tweet_timeline
       expect(Tweet.all.count).should be > 1
     end
     it 'tweets #hashify' do
@@ -71,23 +107,6 @@ describe Tweet do
     it 'parses the hash by attribute' do
       text = Tweet.parse_hash(@tweet, 'text')
       expect(text).to eq @tweet.text
-    end
-    it 'collects string from active record collection' do
-      nightlife = Tweet.irrelevant
-      expect(Tweet.collect_strings(nightlife).first.class).to eq String
-    end
-  end
-  describe 'recent tweets' do
-    before(:each) do
-      @tweet_old = Fabricate(:tweet, tweet_code: "3432reskrdsj")
-      @tweet_old.created_at -= (24*3600 * 2)
-      @tweet_old.save
-    end
-    it 'will only return back tweets in the last x (in our case 2) minutes' do
-      expect(Tweet.tweet_scan(2).count).to eq 1
-    end
-    it 'will return back all objects in the last x (in our case 3) days' do
-      expect(Tweet.recent_tweets(3).count).to eq 2
     end
   end
 end

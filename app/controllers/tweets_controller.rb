@@ -3,6 +3,7 @@ class TweetsController < ApplicationController
     if request.xhr?
       if params["type"] == 'stream'
         @tweets = Tweet.nightlife.tweet_scan(5).order('created_at desc')
+        binding.pry
         if @tweets.present?
           render :tweet, layout: false
         else
@@ -21,7 +22,7 @@ class TweetsController < ApplicationController
     if request.xhr?
       if params['category_id']
         @category = Category.find(params['category_id'])
-        @tweets = Tweet.tweet_scan(5).order('created_at desc')
+        @tweets = Tweet.tweet_scan(5).order('created_at desc').where(category_id: params['category_id'])
           if @tweets.present?
             render :tweet, layout: false
           else
@@ -34,7 +35,7 @@ class TweetsController < ApplicationController
         end
     else
       @category = Category.find_by(list: params['type'])
-       @tweets = Tweet.category_sort(@category.id).page(params[:page]).per(8).order('created_at')
+       @tweets = Tweet.category_sort(@category.id).page(params[:page]).per(8).order('created_at desc')
        render :index
     end
   end

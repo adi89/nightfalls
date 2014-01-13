@@ -5,7 +5,7 @@ mount Sidekiq::Web, at: "/sidekiq"
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   get 'tweets/categories' => 'tweets#categories'
+  get 'users/add_friend' => 'users#follow', as: 'follow_friend'
   resources :tweets
-  resources :categories
   root to: 'tweets#index'
 end

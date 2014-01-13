@@ -16,4 +16,5 @@ Fabricator(:tweet) do
   username 'mr_adisingh'
   text 'phd party tonight at 11!!!'
   tweet_code Faker::Product.letters(10)
+  state 'irrelevant'
 end

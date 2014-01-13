@@ -11,4 +11,5 @@ $ ->
     path = $(this).attr('href')
     id = $(this).data('id')
     $.get "/admin/tweets/state?state=#{state}&id=#{id}", (data) ->
+      console.log(data.state)
       tweet.text(data.state)

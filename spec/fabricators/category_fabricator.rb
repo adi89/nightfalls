@@ -7,9 +7,11 @@
 #  created_at :datetime
 #  updated_at :datetime
 #  list       :string(255)
+#  state      :string(255)
 #
 
 Fabricator(:category) do
   name 'high end djs'
   list 'high-end-djs'
+  state 'low'
 end

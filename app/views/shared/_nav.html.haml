@@ -18,9 +18,9 @@
           %ul.dropdown-menu
             %li= link_to 'Information', tweets_categories_path(:type => 'information')
             %li= link_to 'High End DJs', tweets_categories_path(:type => 'high-end-djs')
-            %li= link_to 'Scenesters', tweets_categories_path(:type => 'nyc-scenesters')
-            %li= link_to 'Promoters', tweets_categories_path(:type => 'nyc-promoters')
-            %li= link_to 'Power Players', tweets_categories_path(:type => 'nyc-power-players')
+            %li= link_to 'Scenesters', tweets_categories_path(:type => 'scenesters')
+            %li= link_to 'Promoters', tweets_categories_path(:type => 'promoters')
+            %li= link_to 'Power Players', tweets_categories_path(:type => 'power-players')
         %li= link_to 'Edit profile', edit_user_registration_path
         %li= link_to "Logout", destroy_user_session_path, method: :delete
       -else

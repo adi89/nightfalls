@@ -18,6 +18,8 @@
 #  provider               :string(255)
 #  uid                    :string(255)
 #  username               :string(255)
+#  token                  :string(255)
+#  token_secret           :string(255)
 #
 
 require 'spec_helper'
