@@ -32,14 +32,13 @@ class User < ActiveRecord::Base
   has_many :friends, through: :users_friends
 
   def self.from_omniauth(auth)
-    binding.pry
     where(auth.slice(:provider, :uid)).first_or_create do |user|
       user.provider = auth.provider
       user.uid = auth.uid
       user.token = auth.extra['access_token'].token
       user.token_secret = auth.extra['access_token'].secret
       user.username = auth.info.nickname
-      rack_up_friends(user)
+      # rack_up_friends(user)
     end
   end
 
@@ -48,7 +47,6 @@ class User < ActiveRecord::Base
   end
 
   def self.rack_up_friends(user)
-    binding.pry
     if user.friends.empty?
       user.friends << Friend.save_friends({token: user.token, token_secret: user.token_secret})
     end
@@ -56,7 +54,6 @@ class User < ActiveRecord::Base
 
   def self.new_with_session(params, session)
     if session["devise.user_attributes"]
-      # binding.pry
       new(session["devise.user_attributes"], without_protection: true) do |user|
         user.attributes = params
         user.valid?

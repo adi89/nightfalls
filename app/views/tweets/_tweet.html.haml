@@ -13,7 +13,5 @@
           .follow
             %i
               =link_to 'follow', follow_friend_path, class: 'follow-nightlife', data: {username: tweet.username}
-        -else
-
       .col-lg-2
         = proper_date(tweet.created_at)

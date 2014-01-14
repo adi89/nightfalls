@@ -20,6 +20,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
+  config.extend ControllerMacros, :type => :controller
   config.color_enabled = true
   config.tty = true
   config.formatter = :documentation

@@ -38,6 +38,7 @@ group :development, :test do
   gem 'pry'
   gem 'pry-debugger'
   gem 'pry-rails'
+  gem 'selenium-webdriver'
   gem 'pry-stack_explorer'
   gem 'database_cleaner'
   gem 'rspec-rails', '~> 2.0'
