@@ -1,5 +1,5 @@
 CLASSIFIER = StuffClassifier::Bayes.new("night or discard")
-CLASSIFIER.ignore_words = [ 'the', 'my', 'i', 'dont' ]
+# CLASSIFIER.ignore_words = [ 'the', 'my', 'i', 'dont' ]
 irrelevant = Tweet.collect_strings(Tweet.irrelevant)
 nightlife = Tweet.collect_strings(Tweet.nightlife)
 
