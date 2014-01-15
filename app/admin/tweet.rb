@@ -13,7 +13,6 @@ ActiveAdmin.register Tweet do
   end
 
 
-
   collection_action :state, :method => :get do
     tweet = Tweet.find(params['id'])
     case params['state']

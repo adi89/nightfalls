@@ -88,11 +88,6 @@ describe Tweet do
       timeline = Tweet.list_timeline(list: 'information', count: 20)
       expect(timeline.first).should be_an_instance_of Twitter::Tweet
     end
-    it 'iterates through users and saves tweets' do
-      user = Fabricate(:user)
-      t =  Tweet.list_users_tweets(list: 'information', token: user.token, token: user.token_secret)
-      expect(t.first).should be_an_instance_of Twitter::Tweet
-    end
   end
 
   describe 'Tweet class methods' do

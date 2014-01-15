@@ -12,5 +12,6 @@
  *= require bootstrap.min
  *= require_self
  *= require_tree .
+ *= require media
  *= require nightfalls
  */

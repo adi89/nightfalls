@@ -15,7 +15,6 @@ describe "Tweets" do
     it 'should have tweets', js: true do
       Fabricate(:tweet).night
       login_to_system
-      binding.pry
       page.should have_css('.tweet')
     end
   end
@@ -47,6 +46,7 @@ describe "Tweets" do
       Fabricate(:friend, username: @tweet.username)
     end
     it 'should allow us to follow a user', js: true do
+      Friend.stub(:unfollow_user).and_return(true)
       visit root_path
       login_to_system
       unless page.has_content?('following')

@@ -25,8 +25,16 @@ class Friend < ActiveRecord::Base
     new_friends
   end
 
+  def self.call_client(options)
+    client(options)
+  end
+
   def self.follow_user(options)
-    client(options).follow(options[:username])
+    call_client(options).follow(options[:username])
+  end
+
+  def self.unfollow_user(options)
+    call_client(options).follow(options[:username])
   end
 
   def self.fetch_all_friends(options = {})
@@ -47,7 +55,7 @@ class Friend < ActiveRecord::Base
   end
 
   def self.friend_ids_data(options = {})
-    client(token: options[:token], token_secret: options[:token_secret]).friend_ids
+    call_client(token: options[:token], token_secret: options[:token_secret]).friend_ids
   end
 
   def self.friend_ids(options = {})
@@ -59,7 +67,7 @@ class Friend < ActiveRecord::Base
   end
 
   def self.friends(options = {})
-    client(token: options[:token], token_secret: options[:token_secret]).users(options[:group])
+    call_client(token: options[:token], token_secret: options[:token_secret]).users(options[:group])
   end
 
   #user now has friends.

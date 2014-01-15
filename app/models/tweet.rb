@@ -40,23 +40,26 @@ class Tweet < ActiveRecord::Base
     end
   end
 
+  def self.unique_tweets(str)
+    where("id not in (#{str})")
+  end
+
   def self.nightlife
-    Tweet.where(state: 'nightlife')
+    where(state: 'nightlife')
   end
 
   def self.irrelevant
-    Tweet.where(state: 'irrelevant')
+    where(state: 'irrelevant')
   end
 
   def self.category_sort(id)
-    Tweet.where(category_id: "#{id}")
+    where(category_id: "#{id}")
   end
 
   def self.save_tweets(tweet, options = {})
-    # dedupe
     state = options[:state] || 'irrelevant'
     if options[:category_id]
-      t = Tweet.find_or_initialize_by(tweet_code: tweet_code(tweet))
+      t = self.find_or_initialize_by(tweet_code: tweet_code(tweet))
       if t.new_record?
         t.text = full_text(tweet)
         t.username = username(tweet)
@@ -122,7 +125,6 @@ class Tweet < ActiveRecord::Base
     hash[attribute]
   end
 
-
   def self.dedupe
     # find all models and group them on keys which should be common
     grouped = all.group_by{|tweet| [tweet.tweet_code] }
@@ -136,4 +138,3 @@ class Tweet < ActiveRecord::Base
   end
 
 end
-#ajax request, save to database, and do an every 5 minute thing for an update. first see if it's relevant. to nightlife, and see the avg rate to get that.

@@ -5,7 +5,6 @@ class UsersController < ApplicationController
     Friend.follow_user({username: params['username'], token: current_user.token, token_secret: current_user.token_secret})
     #client follows
     render nothing: true, layout: false
-
   end
 
 end

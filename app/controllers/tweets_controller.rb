@@ -2,8 +2,8 @@ class TweetsController < ApplicationController
   def index
     if request.xhr?
       if params["type"] == 'stream'
-        @tweets = Tweet.nightlife.tweet_scan(5).order('created_at desc')
-        binding.pry
+        str = params['str']
+        @tweets = Tweet.nightlife.tweet_scan(5).unique_tweets(str).order('created_at desc')
         if @tweets.present?
           render :tweet, layout: false
         else
@@ -22,7 +22,8 @@ class TweetsController < ApplicationController
     if request.xhr?
       if params['category_id']
         @category = Category.find(params['category_id'])
-        @tweets = Tweet.tweet_scan(5).order('created_at desc').where(category_id: params['category_id'])
+        str = params['str']
+        @tweets = Tweet.tweet_scan(5).unique_tweets(str).where(category_id: params['category_id']).order('created_at desc')
           if @tweets.present?
             render :tweet, layout: false
           else
@@ -40,7 +41,6 @@ class TweetsController < ApplicationController
     end
   end
 end
-
 
 #get list info from twitter. looop over collection. find or initialize by id. save over with category id in the relation. save category at the end.
 

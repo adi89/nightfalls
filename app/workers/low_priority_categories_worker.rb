@@ -5,7 +5,7 @@ class LowPriorityCategoriesWorker
   def perform(options = {})
    low_categories = Category.low_priority
    low_categories.each do |category|
-      Tweet.list_users_tweets({count: 10, list: category.list, category_id: category.id })
+      User.list_users_tweets(Tweet, {count: 10, list: category.list, category_id: category.id })
     end
   end
 end

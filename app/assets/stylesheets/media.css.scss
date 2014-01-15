@@ -1,0 +1,46 @@
+@media only screen and (min-width: 320px) and (max-width: 560px) {
+a:hover {
+  color:#696BBC!important
+  }
+
+#main {
+  margin-left:.5em
+  }
+
+#nitefalls-nav-link {
+  margin-left:.5em!important;
+  padding-left:0
+  }
+
+.user-link {
+  color:#5f9ea0!important;
+  font-size:1.5em
+  }
+
+.tweet-message-container,.tweet-date-container,.tweet-following-container {
+  margin-bottom:.5em
+  }
+
+.tweet-link-container{
+  margin-bottom: 0.5em;
+  }
+.tweet-date-container{
+  margin-top: 0.5em;
+  }
+
+.tweet-following-container{
+  margin-top: 0.5em;
+  font-size: 1.1em;
+  }
+.tweet-following-container{
+  font-weight: bolder;
+  }
+
+.follow-nightlife{
+  letter-spacing: 2px;
+  }
+
+.follow-nightlife:hover{
+  font-weight: 500;
+  }
+}

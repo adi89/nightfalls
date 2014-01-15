@@ -24,11 +24,6 @@ module TwitterClient
       client(options).list_timeline('adi_s89', options[:list], count: options[:count])
     end
 
-    def list_users_tweets(options = {})
-      user = User.all.sample
-      list_tweets(options.merge(token: user.token, token_secret: user.token_secret))
-    end
-
     def client(options = {})
       Twitter::REST::Client.new do |config|
         config.consumer_key        = ENV['TWITTER_CONSUMER_KEY']
@@ -46,6 +41,18 @@ module TwitterClient
       end
     end
 
+    def list_tweets(options = {})
+      list_tweets_parse(options).each do |tweet|
+        if nightlife?(tweet)
+          options[:state] = 'nightlife'
+          save_tweets(tweet, options)
+        else
+          options[:state] = 'irrelevant'
+          save_tweets(tweet, options)
+        end
+      end
+    end
+
     #we want to get fetch the tweets. find or create by id. return them to the method to use. save these tweets by their
 
     protected
@@ -59,18 +66,6 @@ module TwitterClient
     end
 
     private
-
-    def list_tweets(options = {})
-      list_tweets_parse(options).each do |tweet|
-        if nightlife?(tweet)
-          options[:state] = 'nightlife'
-          save_tweets(tweet, options)
-        else
-          options[:state] = 'irrelevant'
-          save_tweets(tweet, options)
-        end
-      end
-    end
 
     def add_members_to_list(options = {})
       client(options).add_list_members(options[:list], options[:users])

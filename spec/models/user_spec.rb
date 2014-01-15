@@ -25,5 +25,11 @@
 require 'spec_helper'
 
 describe User do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'list user tweets' do
+    it 'iterates through users and saves tweets' do
+      user = Fabricate(:user)
+      t =  User.list_users_tweets(Tweet, {list: 'information', token: user.token, token: user.token_secret})
+      expect(t.first).should be_an_instance_of Twitter::Tweet
+    end
+  end
 end

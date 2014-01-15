@@ -1,7 +1,6 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def all
-    # binding.pry
     user = User.from_omniauth(request.env['omniauth.auth'])
     if user.persisted?
       flash.notice = "Signed into Twitter!"

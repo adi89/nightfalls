@@ -42,6 +42,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.list_users_tweets(receiver, options = {})
+    user = self.all.sample
+    receiver.list_tweets(options.merge(token: user.token, token_secret: user.token_secret))
+  end
+
   def following?(tweet_handle)
     self.friends.where(username: tweet_handle).present?
   end
