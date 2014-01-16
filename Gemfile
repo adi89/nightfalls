@@ -24,6 +24,8 @@ gem 'omniauth-twitter'
 gem 'clockwork', require: false
 gem 'foreman'
 gem 'gem_bench', :group => :console
+gem 'heroku-forward'
+gem 'thin'
 
 group :assets do
   gem 'sass-rails', '~> 4.0.0'
