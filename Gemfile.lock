@@ -127,6 +127,8 @@ GEM
     formatador (0.2.4)
     formtastic (2.3.0.rc2)
       actionpack (>= 3.0)
+    gem_bench (0.0.8)
+      bundler (> 1.2)
     guard (1.8.2)
       formatador (>= 0.2.4)
       listen (>= 1.0.0)
@@ -368,6 +370,7 @@ DEPENDENCIES
   figaro
   font-awesome-rails
   foreman
+  gem_bench
   guard-rspec
   haml
   jbuilder (~> 1.2)

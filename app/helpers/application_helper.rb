@@ -1,3 +1,4 @@
+require 'twitter-text'
 module ApplicationHelper
 
   def twitter_user_link(username)

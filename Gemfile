@@ -12,17 +12,18 @@ gem 'jquery-ui-rails'
 gem 'font-awesome-rails'
 gem 'sidekiq'
 gem 'sinatra', require: false
-gem 'slim'
+gem 'slim', require: false
 gem 'kaminari'
 gem 'twitter'
 gem 'state_machine'
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'stuff-classifier', :git =>'https://github.com/henghonglee/stuff-classifier'
-gem 'twitter-text'
+gem 'twitter-text', require: false
 gem 'devise'
 gem 'omniauth-twitter'
-gem 'clockwork'
+gem 'clockwork', require: false
 gem 'foreman'
+gem 'gem_bench', :group => :console
 
 group :assets do
   gem 'sass-rails', '~> 4.0.0'

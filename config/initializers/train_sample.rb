@@ -1,0 +1,1 @@
+CLASSIFIER = StuffClassifier::Bayes.new("night or discard")
