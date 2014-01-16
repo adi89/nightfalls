@@ -4,7 +4,6 @@ development:
   database: nightfalls_development
   pool: 20
   host: localhost
-  username:  AdiSingh
   password:
 
 test:
@@ -13,7 +12,6 @@ test:
   database: nightfalls_test
   pool: 20
   host: localhost
-  username:  AdiSingh
   password:
 
 production:
@@ -22,5 +20,4 @@ production:
   database: nightfalls_production
   pool: 20
   host: localhost
-  username:  AdiSingh
   password:
