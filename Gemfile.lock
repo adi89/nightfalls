@@ -110,6 +110,7 @@ GEM
     dotenv (0.7.0)
     equalizer (0.0.8)
     erubis (2.7.0)
+    excon (0.31.0)
     execjs (2.0.2)
     fabrication (2.7.2)
     faraday (0.8.8)
@@ -142,6 +143,15 @@ GEM
       actionpack (>= 3.2, < 5)
       activesupport (>= 3.2, < 5)
     hashie (2.0.5)
+    heroku (3.2.2)
+      heroku-api (~> 0.3.7)
+      launchy (>= 0.3.2)
+      netrc (~> 0.7.7)
+      rest-client (~> 1.6.1)
+      rubyzip
+    heroku-api (0.3.16)
+      excon (~> 0.27)
+      multi_json (~> 1.8.2)
     hike (1.2.3)
     http (0.5.0)
       http_parser.rb
@@ -165,6 +175,8 @@ GEM
     kaminari (0.15.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    launchy (2.4.2)
+      addressable (~> 2.3)
     listen (1.2.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -181,6 +193,7 @@ GEM
     minitest (4.7.5)
     multi_json (1.8.2)
     multipart-post (1.2.0)
+    netrc (0.7.7)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     oauth (0.4.7)
@@ -252,6 +265,8 @@ GEM
       redis (~> 3.0.0)
     responders (1.0.0)
       railties (>= 3.2, < 5)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
@@ -370,6 +385,7 @@ DEPENDENCIES
   foreman
   guard-rspec
   haml
+  heroku
   jbuilder (~> 1.2)
   jquery-turbolinks
   jquery-ui-rails

@@ -23,6 +23,7 @@ gem 'devise'
 gem 'omniauth-twitter'
 gem 'clockwork'
 gem 'foreman'
+gem 'heroku'
 
 group :assets do
   gem 'sass-rails', '~> 4.0.0'
