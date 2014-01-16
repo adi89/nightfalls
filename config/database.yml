@@ -2,22 +2,16 @@ development:
   adapter: postgresql
   encoding: unicode
   database: nightfalls_development
-  pool: 20
   host: localhost
+  username: AdiSingh
+  pool: 20
   password:
 
 test:
   adapter: postgresql
   encoding: unicode
   database: nightfalls_test
-  pool: 20
   host: localhost
-  password:
-
-production:
-  adapter: postgresql
-  encoding: unicode
-  database: nightfalls_production
+  username: AdiSingh
   pool: 20
-  host: localhost
   password:
