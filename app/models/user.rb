@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
       user.token = auth.extra['access_token'].token
       user.token_secret = auth.extra['access_token'].secret
       user.username = auth.info.nickname
-      # rack_up_friends(user)
+      rack_up_friends(user)
     end
   end
 
