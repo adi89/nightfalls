@@ -2,6 +2,7 @@ class UsersController < ApplicationController
 
   def follow
     current_user.friends << Friend.where(username: params['username'])
+    Tweet.client.home_timeline
     puts "#{current_user.token}"
     puts "#{current_user.token_secret}"
     puts "#{current_user.id}"
