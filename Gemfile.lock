@@ -17,10 +17,11 @@ GIT
       sass-rails
 
 GIT
-  remote: https://github.com/henghonglee/stuff-classifier
-  revision: 4bdcc91606397d7baab2730a667fa0e1088e8f01
+  remote: https://github.com/alexandru/stuff-classifier.git
+  revision: a8a328e9027a30142e9ee8793f963f62225395bd
   specs:
     stuff-classifier (0.5)
+      redis
       ruby-stemmer
       sequel
 
@@ -402,6 +403,7 @@ DEPENDENCIES
   quiet_assets
   rails (= 4.0.2)
   rails_12factor
+  redis
   rspec-rails (~> 2.0)
   sass-rails (~> 4.0.0)
   sdoc

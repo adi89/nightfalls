@@ -1,12 +1,14 @@
-   CLASSIFIER = StuffClassifier::Bayes.new("night or discard")
-    # CLASSIFIER.ignore_words = [ 'the', 'my', 'i', 'dont' ]
-    irrelevant = Tweet.collect_strings(Tweet.irrelevant)
-    nightlife = Tweet.collect_strings(Tweet.nightlife)
+require 'redis'
+    @key = "stuff-classifier"
+    @redis_options = { host: 'http://redistogo:9e2a2e377715c850a14297f8a107736e@crestfish.redistogo.com', port: 10559 }
 
-    nightlife.each do |tweet|
-      CLASSIFIER.train(:night, tweet)
-    end
+    @storage = StuffClassifier::RedisStorage.new(@key, @redis_options)
+    StuffClassifier::Base.storage = @storage
 
-    irrelevant.each do |tweet|
-      CLASSIFIER.train(:discard, tweet)
-    end
+    # @redis_options = { host: 'localhost', port: 6379 }
+    # redis = Redis.new(@redis_options)
+
+    #disk
+    # @store = StuffClassifier::FileStorage.new('/tmp/stuff.db')
+    # StuffClassifier::Base.storage = @store
+

@@ -8,6 +8,9 @@ Bundler.require(:default, Rails.env)
 
 module WhentheNitefalls
   class Application < Rails::Application
+    # config.store = StuffClassifier::FileStorage.new('/Users/AdiSingh/Documents/wdi3/projects/nightfalls/lib/assets/stuff-classifier')
+    # StuffClassifier::Base.storage = config.store
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

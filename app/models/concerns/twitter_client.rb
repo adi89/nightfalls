@@ -53,6 +53,30 @@ module TwitterClient
       end
     end
 
+    def nightlife?(tweet_data)
+      classifier = StuffClassifier::Bayes.open("night or discard")
+      if classifier.category_list.empty?
+        classify_init(classifier)
+      end
+        classifier.classify(tweet_data.full_text) == :night
+    end
+
+    def classify_init(classifier)
+
+      irrelevant = Tweet.collect_strings(Tweet.irrelevant)
+      nightlife = Tweet.collect_strings(Tweet.nightlife)
+
+      nightlife.each do |tweet|
+        classifier.train(:night, tweet)
+      end
+
+      irrelevant.each do |tweet|
+        classifier.train(:discard, tweet)
+      end
+
+      classifier.save_state
+    end
+
     #we want to get fetch the tweets. find or create by id. return them to the method to use. save these tweets by their
 
     protected
@@ -69,10 +93,6 @@ module TwitterClient
 
     def add_members_to_list(options = {})
       client(options).add_list_members(options[:list], options[:users])
-    end
-
-    def nightlife?(tweet_data)
-      CLASSIFIER.classify(tweet_data.full_text) == :night
     end
 
     def grab_users_from_list(options = {})

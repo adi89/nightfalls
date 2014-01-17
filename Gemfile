@@ -17,7 +17,8 @@ gem 'kaminari'
 gem 'twitter'
 gem 'state_machine'
 gem 'activeadmin', github: 'gregbell/active_admin'
-gem 'stuff-classifier', :git =>'https://github.com/henghonglee/stuff-classifier'
+gem 'stuff-classifier', :git =>'https://github.com/alexandru/stuff-classifier.git'
+
 gem 'twitter-text', require: false
 gem 'devise'
 gem 'omniauth-twitter'
@@ -51,6 +52,7 @@ group :development, :test do
   gem 'quiet_assets'
   gem 'binding_of_caller'
   gem 'capybara'
+  gem 'redis'
 end
 
 group :production do
