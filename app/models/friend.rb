@@ -20,7 +20,7 @@ class Friend < ActiveRecord::Base
   def self.save_friends(options = {})
     new_friends = []
     fetch_all_friends(options).each do |friend|
-      new_friends.push(Friend.create(username: friend))
+      new_friends.push(Friend.new(username: friend))
     end
     new_friends
   end
