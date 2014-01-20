@@ -1,46 +1,87 @@
 @import url(http://fonts.googleapis.com/css?family=Inder)
+@import url(http://fonts.googleapis.com/css?family=Exo:400,900)
 
 body
-  background: url('fabric_plaid.png')
-  font-family: georgia
+  background: white
+  font-family: helvetica
   font-size: 1.1em
-  color: #436F8F
+  color: black
   font-weight: 100
   a
     text-decoration: none!important
   a:hover
     color: #696BBC
+h1
+  color: black
+  font-size: 3em
+.categories-links a
+  margin-right: 60px
+  border-bottom: 2.5px solid transparent
+  transition: 0.7s ease
+  white-space: nowrap
+  display: inline-block
+.categories-links a:hover
+  border-bottom: 2.5px solid #af376a
+a#edit-profile:hover, a#logout:hover
+  color: #af376a
 #footer
-  padding: 15px
-  background: #182C36
+  padding-top: 15px
+  padding-bottom: 15px
+  background: white
   font-size: 0.6em
   margin-bottom: 0
+  font-family: Exo
+  font-weight: boldest
 #footer-container h4, .subvrt-header a
   color: #AF376A!important
   text-decoration: none
+#footer-container
+  margin-left: 2em
 .tweet
   margin-bottom: 20px
   padding-bottom: 10px
   border-bottom: 1px solid black
 .twitter-message a
   color: #63A595!important
+.nitefeed-title
+  text-align: center
+  color: black
+  font-family: futura
+  margin-bottom: 2.5em
+  display: block
+.nitefeed-title div
+  display: inline-block
+  clear: both!important
+.clearspace
+  clear: both
+.title1
+  font-size: 1em
+  line-height: inherit
+  vertical-align: top
+.title2
+  font-size: 2em
+.navbar-inverse .navbar-nav>li>a
+  color: black
+.navbar-inverse .navbar-nav>li>a:hover
+  color: #af376a
 .navbar-brand
   text-decoration: none!important
 #nitefalls-nav-link
-  color: #AF376A!important
+  color: black
 #nitefalls-nav
-  border-bottom: 3px solid cadetblue!important
-  background-color: #182C36!important
-#bs-example-navbar-collapse-1
-  border-bottom: 2px solid purple
-#nitefalls-nav-link
-  margin-left: 2em
+  background-color: white
+  border: none
+  display: block
+#edit-profile, #logout
+  color: black
 #flash_notice
   background: lightblue
   padding-left: 3em
+  font-size: .85em
+  text-align: center
   margin-bottom: 1em
-.logged-in-as
-  color: #AF376A!important
+#category-dropdown
+  display: none
 .button-margin
   margin-top: 10px
   margin-bottom: 20px

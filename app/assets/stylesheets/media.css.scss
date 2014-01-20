@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Exo:400,900);
+
 @media only screen and (min-width: 320px) and (max-width: 560px) {
 a:hover {
   color:#696BBC!important
@@ -9,8 +11,47 @@ a:hover {
 
 #nitefalls-nav-link {
   margin-left:.5em!important;
-  padding-left:0
+  padding-left:0;
+  color: white!important;
   }
+
+.nitefeed-title{
+  text-align: left!important;
+  font-size: 2em;
+  margin-bottom: 1.2em!important;
+}
+
+#edit-profile, #logout, .logged-in-as{
+  color: white!important;
+}
+.dropdown-menu a {
+  color: white!important;
+}
+
+.dropdown-menu a:hover {
+  color: #af376a!important;
+}
+
+h1{
+  font-size: 1em!important;
+}
+#home-link-desk{
+  display: none!important;
+}
+
+.logged-in-as{
+  color: #AF376A!important;
+  display: block;
+}
+#category-dropdown{
+  display: block!important;
+}
+#nitefalls-nav{
+  float: none!important;
+  width: inherit!important;
+  background-color: #182C36!important;
+  border: solid 1px black;
+}
 
 .user-link {
   color:#5f9ea0!important;
@@ -43,4 +84,32 @@ a:hover {
 .follow-nightlife:hover{
   font-weight: 500;
   }
+
+.navbar-nav li a{
+  color: #fff;
 }
+
+.categories-links{
+  display: none!important;
+}
+
+.sign-up, .sign-in-with-twitter{
+  color: white!important;
+}
+
+#footer{
+  background-color: #182C36!important;
+  padding-left: 1em!important;
+  color: white!important;
+}
+#footer div{
+  margin-left: 0!important;
+}
+
+}
+#footer{
+  font-family: 'Exo'!important;
+  font-weight: 900!important;
+}
+
+

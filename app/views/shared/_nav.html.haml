@@ -6,12 +6,12 @@
       %span.icon-bar
       %span.icon-bar
       %span.icon-bar
-    = link_to "NiteFalls", root_path, class: "navbar-brand", id: 'nitefalls-nav-link'
+    = link_to "NiteFalls", root_path, class: "navbar-brand home-link-mobile", id: 'nitefalls-nav-link'
   / Collect the nav links, forms, and other content for toggling
   #bs-example-navbar-collapse-1.collapse.navbar-collapse
     %ul.nav.navbar-nav.navbar-right
       -if user_signed_in?
-        %li.dropdown
+        %li.dropdown#category-dropdown
           %a.dropdown-toggle.logged-in-as{"data-toggle" => "dropdown", href: "#"}
             = "Categories"
             %b.caret
@@ -21,9 +21,9 @@
             %li= link_to 'Scenesters', tweets_categories_path(:type => 'scenesters')
             %li= link_to 'Promoters', tweets_categories_path(:type => 'promoters')
             %li= link_to 'Power Players', tweets_categories_path(:type => 'power-players')
-        %li= link_to 'Edit profile', edit_user_registration_path
-        %li= link_to "Logout", destroy_user_session_path, method: :delete
+        %li= link_to 'Edit profile', edit_user_registration_path, id: 'edit-profile'
+        %li= link_to "Logout", destroy_user_session_path, method: :delete, id: 'logout'
       -else
-        %li= link_to "Sign up", new_user_registration_path
-        %li= link_to "Sign in", new_user_session_path
-        %li= link_to "Sign in with Twitter", user_omniauth_authorize_path(:twitter)
+        %li= link_to "Sign up", new_user_registration_path, class: 'sign-up'
+        / %li= link_to "Sign in", new_user_session_path
+        %li= link_to "Sign in with Twitter", user_omniauth_authorize_path(:twitter), class: 'sign-in-with-twitter'

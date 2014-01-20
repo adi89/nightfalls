@@ -1,8 +1,17 @@
-.row
-  -if @category
-    %h2= @category.name.titleize
-  -else
-    %h2 The NiteFeed
+.row.clearspace
+  .nitefeed-title
+    %h1
+      -if @category
+        .title2
+          = @category.name.titleize
+      -else
+        .title1 The
+        .title2 NiteFeed
+    -if @auth
+      .categories-links
+        -Category.all.each do |c|
+          .category-link
+            = link_to c.name, tweets_categories_path(:type => "#{c.list}")
   #tweets{data: {url: request.path, category_id: @category.try(:id)}}
     = render @tweets
 

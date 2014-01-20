@@ -38,3 +38,4 @@ $ ->
     $.get "#{path}?username=#{username}", (data) ->
       link.text('following')
       link.attr('disabled', 'disabled')
+  $('#flash_notice').fadeOut(1600)
