@@ -11,7 +11,7 @@
 class Friend < ActiveRecord::Base
   has_many :users_friends
   has_many :users, through: :users_friends
-  validates_uniqueness_of :username
+  # validates_uniqueness_of :username
   include TwitterClient
   # now the logic is, if the user has
 
@@ -20,7 +20,7 @@ class Friend < ActiveRecord::Base
   def self.save_friends(options = {})
     new_friends = []
     fetch_all_friends(options).each do |friend|
-      new_friends.push(Friend.new(username: friend))
+      new_friends.push(Friend.find_or_create_by(username: friend))
     end
     new_friends
   end
