@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
   attr_accessor :current_user
   has_many :users_friends
   has_many :friends, through: :users_friends
+  after_save {|user| user.rack_up_friends}
 
   def self.from_omniauth(auth)
     where(auth.slice(:provider, :uid)).first_or_create do |user|
@@ -38,7 +39,6 @@ class User < ActiveRecord::Base
       user.token = auth.extra['access_token'].token
       user.token_secret = auth.extra['access_token'].secret
       user.username = auth.info.nickname
-      rack_up_friends(user)
     end
   end
 
@@ -51,9 +51,9 @@ class User < ActiveRecord::Base
     self.friends.where(username: tweet_handle).present?
   end
 
-  def self.rack_up_friends(user)
-    if user.friends.empty?
-      user.friends << Friend.save_friends({token: user.token, token_secret: user.token_secret})
+  def rack_up_friends
+    if self.friends.empty?
+      self.friends << Friend.save_friends({token: self.token, token_secret: self.token_secret})
     end
   end
 
