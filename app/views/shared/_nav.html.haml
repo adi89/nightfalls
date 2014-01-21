@@ -24,6 +24,6 @@
         %li= link_to 'Edit profile', edit_user_registration_path, id: 'edit-profile'
         %li= link_to "Logout", destroy_user_session_path, method: :delete, id: 'logout'
       -else
-        %li= link_to "Sign up", new_user_registration_path, class: 'sign-up'
+        / %li= link_to "Sign up", new_user_registration_path, class: 'sign-up'
         / %li= link_to "Sign in", new_user_session_path
-        %li= link_to "Sign in with Twitter", user_omniauth_authorize_path(:twitter), class: 'sign-in-with-twitter'
+        %li= link_to "#{fa_icon 'twitter' } &nbsp; Sign in with Twitter".html_safe, user_omniauth_authorize_path(:twitter), id: 'sign-in-with-twitter'

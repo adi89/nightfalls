@@ -14,6 +14,7 @@ gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim', require: false
 gem 'kaminari'
+gem 'font-awesome-rails'
 gem 'twitter'
 gem 'state_machine'
 gem 'activeadmin', github: 'gregbell/active_admin'
