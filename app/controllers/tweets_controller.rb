@@ -10,11 +10,15 @@ class TweetsController < ApplicationController
           render nothing: true
         end
       elsif params['page']
-        @tweets = Tweet.nightlife.recent_tweets(2).order('created_at desc').page(params[:page])
+        tweet_records = Tweet.nightlife.recent_tweets(2).order('created_at desc')
+        @list = tweet_records.pluck(:username).uniq
+        @tweets = tweet_records.page(params[:page])
         render layout: false
       end
     else
-      @tweets = Tweet.nightlife.recent_tweets(2).order('created_at desc').page(params[:page])
+      tweet_records = Tweet.nightlife.recent_tweets(2).order('created_at desc')
+      @tweets = tweet_records.page(params[:page])
+      @list = tweet_records.pluck(:username).uniq
     end
   end
 
@@ -31,12 +35,16 @@ class TweetsController < ApplicationController
           end
         elsif params['page']
           @category = Category.find_by(list: params['type'])
-          @tweets = Tweet.category_sort(@category.id).page(params[:page]).per(8).order('created_at desc')
+          tweet_records = Tweet.category_sort(@category.id).recent_tweets(2).order('created_at desc').recent_tweets(2).order('created_at desc')
+          @tweets = tweet_records.page(params[:page])
+          @list = tweet_records.pluck(:username).uniq
           render :index, layout: false
         end
     else
       @category = Category.find_by(list: params['type'])
-       @tweets = Tweet.category_sort(@category.id).page(params[:page]).per(8).order('created_at desc')
+      tweet_records = Tweet.category_sort(@category.id).recent_tweets(2).order('created_at desc')
+      @tweets = tweet_records.page(params[:page])
+      @list = tweet_records.pluck(:username).uniq
        render :index
     end
   end

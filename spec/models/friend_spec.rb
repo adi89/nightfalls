@@ -2,10 +2,11 @@
 #
 # Table name: friends
 #
-#  id         :integer          not null, primary key
-#  username   :string(255)
-#  created_at :datetime
-#  updated_at :datetime
+#  id          :integer          not null, primary key
+#  username    :string(255)
+#  created_at  :datetime
+#  updated_at  :datetime
+#  profile_pic :string(255)
 #
 
 require 'spec_helper'

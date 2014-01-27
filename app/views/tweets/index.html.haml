@@ -1,18 +1,37 @@
 .row.clearspace
   .nitefeed-title
-    %h1
-      -if @category
-        .title2
+    -if @category
+      %h1
+        .title2.cat-title
           = @category.name.titleize
-      -else
+    -else
+      %h1
         .title1 The
         .title2 NiteFeed
+        #epitet
+          The Lowdown on New York Nightlife
     -if @auth
       .categories-links
         -Category.all.each do |c|
           .category-link
             = link_to c.name, tweets_categories_path(:type => "#{c.list}")
-  #tweets{data: {url: request.path, category_id: @category.try(:id)}}
-    = render @tweets
+.row
+  .col-lg-4
+    #list
+      .text
+        .description-box
+          = category_description(@category)
+          .last-updated
+            = last_updated(@tweets)
+        .cast
+          %p
+            The cast:
+          -@list.each do |member|
+            .member
+              = link_to member, tweet_user_link(member)
+  .col-lg-1
+  .col-lg-7
+    #tweets{data: {url: request.path, category_id: @category.try(:id)}}
+      = render @tweets
 
 = paginate @tweets

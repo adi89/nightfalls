@@ -1,16 +1,17 @@
 .tweet{data: {tweet_id: tweet.id}}
-  .row
-    .col-lg-2.tweet-link-container
-      = twitter_user_link(tweet.username)
-    .col-lg-6.tweet-message-container
-      .twitter-message
-        = twitter_message_w_links(tweet.text)
-    .col-lg-2.tweet-following-container
-      -if @auth && @auth.following?(tweet.username)
-        %i following
-      -elsif @auth
-        .follow
-          %i
-            =link_to 'follow?', follow_friend_path, class: 'follow-nightlife', data: {username: tweet.username}
-    .col-lg-2.tweet-date-container
-      = proper_date(tweet.created_at)
+  .tweet-message-container
+    .twitter-message
+      = twitter_message_w_links(tweet.text)
+  .tweet-pic-container
+    = image_tag(tweet.friend.try(:profile_pic))
+  .tweet-link-container
+    = twitter_user_link(tweet.username)
+  .tweet-following-container
+    -if @auth && @auth.following?(tweet.username)
+      %i following
+    -elsif @auth
+      .follow.btn.btn-success
+        %i
+          =link_to 'follow?', follow_friend_path, class: 'follow-nightlife', data: {username: tweet.username}
+  .tweet-date-container
+    = proper_date(tweet.created_at)

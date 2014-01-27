@@ -26,9 +26,11 @@
 #  category_id :integer
 #
 class Tweet < ActiveRecord::Base
-  include TwitterClient
+  include Classification
+  include TimeUtil
+  belongs_to :friend
   validates :tweet_code, uniqueness: true, unless: Proc.new{|c| c.tweet_code.blank?}
-  validates :text, uniqueness: true
+  validates :text, presence: true
   belongs_to :category
 
   state_machine :state, initial: :irrelevant do
@@ -57,7 +59,7 @@ class Tweet < ActiveRecord::Base
   end
 
   def self.save_tweets(tweet, options = {})
-    state = options[:state] || 'irrelevant'
+    state = options[:state]
     if options[:category_id]
       t = self.find_or_initialize_by(tweet_code: tweet_code(tweet))
       if t.new_record?
@@ -72,8 +74,7 @@ class Tweet < ActiveRecord::Base
         category.tweets << t
         puts "Tweet put in #{category.name}"
       end
-    else
-      t = Tweet.create(username: username(tweet), text: full_text(tweet), tweet_code: tweet_code(tweet), state: state)
+      Friend.add_tweet(t)
     end
     t
   end
@@ -86,44 +87,8 @@ class Tweet < ActiveRecord::Base
     where("created_at > '#{days_ago(days)}'")
   end
 
+#the question is do we want this in friend or in user?
   private
-  def self.set_tweet_timeline
-    fetch_all_tweets.collect{|tweet_data| self.save_tweets(tweet_data, {})}
-  end
-
-  def self.days_ago(days)
-    Time.at(days_calculation(days))
-  end
-
-  def self.days_calculation(days)
-    Time.now.to_i - (days * 3600 * 24)
-  end
-
-  def self.created_at_offset_factor
-    3600 * 5 #5 hour pg offset's created
-  end
-
-  def self.minutes_calculation(minutes)
-    Time.now.to_i + created_at_offset_factor - (60 * minutes) #5 hour offset
-  end
-
-  def self.parse_hash(tweet, attribute)
-    hashify(tweet)[attribute]
-  end
-
-  def self.collect_strings(collection)
-    collection.map!{|tweet| corpse_string(tweet, 'text')}
-  end
-
-  def self.hashify(tweet)
-    JSON.load(tweet.to_json)
-  end
-
-  def self.corpse_string(tweet, attribute)
-    hash = Hash.new
-    hash[attribute] = parse_hash(tweet, attribute)
-    hash[attribute]
-  end
 
   def self.dedupe
     # find all models and group them on keys which should be common

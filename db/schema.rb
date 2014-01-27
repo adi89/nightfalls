@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140110212119) do
+ActiveRecord::Schema.define(version: 20140122210720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20140110212119) do
     t.string   "username"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "profile_pic"
   end
 
   create_table "tweets", force: true do |t|
@@ -71,9 +72,11 @@ ActiveRecord::Schema.define(version: 20140110212119) do
     t.datetime "updated_at"
     t.string   "state"
     t.integer  "category_id"
+    t.integer  "friend_id"
   end
 
   add_index "tweets", ["category_id"], name: "index_tweets_on_category_id", using: :btree
+  add_index "tweets", ["friend_id"], name: "index_tweets_on_friend_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

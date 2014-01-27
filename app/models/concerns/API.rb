@@ -1,4 +1,4 @@
-module TwitterClient
+module API
   extend ActiveSupport::Concern
 
   module ClassMethods
@@ -10,14 +10,19 @@ module TwitterClient
       client(options).user_timeline(user, options)
     end
 
-    def classify_tweet(tweet)
-      if nightlife?(tweet)
-        puts 'nightlife'
-        save_tweets(tweet, {state: 'nightlife'})
-      else
-        puts 'irrelevant'
-        save_tweets(tweet, {state: 'irrelevant'})
-      end
+    def get_profile_pic(username)
+      image_url = user_data(username).profile_image_url
+      image_url.site + image_url.path
+    end
+
+    def user_data(username)
+      random_client.user(username)
+    end
+
+    def random_client
+      user = User.all.sample
+      options = {token: user.token, token_secret: user.token_secret}
+      client(options)
     end
 
     def list_timeline(options = {})
@@ -41,41 +46,10 @@ module TwitterClient
       end
     end
 
-    def list_tweets(options = {})
-      list_tweets_parse(options).each do |tweet|
-        if nightlife?(tweet)
-          options[:state] = 'nightlife'
-          save_tweets(tweet, options)
-        else
-          options[:state] = 'irrelevant'
-          save_tweets(tweet, options)
-        end
-      end
+    def self.set_tweet_timeline
+      fetch_all_tweets.collect{|tweet_data| self.save_tweets(tweet_data, {})}
     end
 
-    def nightlife?(tweet_data)
-      classifier = StuffClassifier::Bayes.open("night or discard")
-      if classifier.category_list.empty?
-        classify_init(classifier)
-      end
-        classifier.classify(tweet_data.full_text) == :night
-    end
-
-    def classify_init(classifier)
-
-      irrelevant = Tweet.collect_strings(Tweet.irrelevant)
-      nightlife = Tweet.collect_strings(Tweet.nightlife)
-
-      nightlife.each do |tweet|
-        classifier.train(:night, tweet)
-      end
-
-      irrelevant.each do |tweet|
-        classifier.train(:discard, tweet)
-      end
-
-      classifier.save_state
-    end
 
     #we want to get fetch the tweets. find or create by id. return them to the method to use. save these tweets by their
 
@@ -141,13 +115,6 @@ module TwitterClient
 
     def tweet_code(tweet)
       "#{tweet.id}"
-    end
-
-    def fetch_new_tweets(amount, options)
-      home_timeline_data(amount, options).each do |tweet|
-        puts 'fetch'
-        classify_tweet(tweet)
-      end
     end
 
     def username(tweet)

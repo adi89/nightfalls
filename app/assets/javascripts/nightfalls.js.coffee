@@ -36,6 +36,8 @@ $ ->
     path = link.attr('href')
     username = link.data('username')
     $.get "#{path}?username=#{username}", (data) ->
+      link.parent().parent().removeClass('btn btn-success')
       link.text('following')
       link.attr('disabled', 'disabled')
   $('#flash_notice').fadeOut(1600)
+  $('.cat-title').hide().fadeIn('slow')
