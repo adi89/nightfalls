@@ -60,7 +60,6 @@ class Tweet < ActiveRecord::Base
 
   def self.save_tweets(tweet, options = {})
     state = options[:state]
-    if options[:category_id]
       t = self.find_or_initialize_by(tweet_code: tweet_code(tweet))
       if t.new_record?
         t.text = full_text(tweet)
@@ -69,13 +68,14 @@ class Tweet < ActiveRecord::Base
         t.save
         puts "tweet saved"
       end
+      if options[:category_id]
       category = Category.find(options[:category_id])
       unless category.tweets.include? t
         category.tweets << t
         puts "Tweet put in #{category.name}"
       end
-      Friend.add_tweet(t)
     end
+      Friend.add_tweet(t)
     t
   end
 

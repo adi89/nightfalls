@@ -3,7 +3,7 @@ development:
   encoding: unicode
   database: nightfalls_development
   host: localhost
-  username: AdiSingh
+  username:
   pool: 20
   password:
 
@@ -12,6 +12,6 @@ test:
   encoding: unicode
   database: nightfalls_test
   host: localhost
-  username: AdiSingh
+  username:
   pool: 20
   password:

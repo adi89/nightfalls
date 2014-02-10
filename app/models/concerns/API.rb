@@ -50,7 +50,6 @@ module API
       fetch_all_tweets.collect{|tweet_data| self.save_tweets(tweet_data, {})}
     end
 
-
     #we want to get fetch the tweets. find or create by id. return them to the method to use. save these tweets by their
 
     protected

@@ -7,6 +7,9 @@
 # Ignore bundler config.
 /.bundle
 
+
+/ push_201401161027.dat
+
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
@@ -17,3 +20,6 @@
 
 # Ignore application configuration
 /config/application.yml
+
+#Ignore database.yml
+/config/database.yml

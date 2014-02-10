@@ -72,7 +72,7 @@ describe Tweet do
       expect(tweet.save).to eq false
     end
   end
-  describe 'TwitterClient' do
+  describe 'API' do
     it 'user_timeline_data gives back tweets from a user' do
       expect(@user_timeline_data.present?).to eq true
     end

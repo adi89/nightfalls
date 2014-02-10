@@ -46,7 +46,7 @@
 #  token_secret           :string(255)
 #
 Fabricator(:user) do
-  username 'adi_s89'
+  username ENV['TWITTER_USERNAME']
   password ENV['TWITTER_PASSWORD']
   email 'eternalglow769@yahoo.com'
   token ENV['TWITTER_TOKEN']
